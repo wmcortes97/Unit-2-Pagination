@@ -96,19 +96,33 @@ const numOfPages = Math.ceil(list.length / 9); //returning 5
        </li>`;
 
        linkList.insertAdjacentHTML('beforeend', button );
-       
-       const firstButton = document.querySelector('button');
-       firstButton.className = 'active';
-    }
 
   // give the first pagination button a class of "active"
+  const clickedButton = document.querySelector('button');
+       clickedButton.className = 'active';
 
   // create an event listener on the `link-list` element
-    // if the click target is a button:
+
+  linkList.addEventListener('click', (event) => {
+// if the click target is a button:
+if (event.target.tagName === 'BUTTON') {
       // remove the "active" class from the previous button
+const prevButton = document.querySelector('.active');
+prevButton.className = '';
+event.target.className = 'active';
+ 
       // add the active class to the clicked button
       // call the showPage function passing the `list` parameter and page to display as arguments
 
+
+}
+   
+
+
+  }) 
+
+ 
+    }
 }
 
 addPagination(data);
