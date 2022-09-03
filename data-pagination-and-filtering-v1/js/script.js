@@ -3,23 +3,15 @@ Treehouse Techdegree:
 FSJS Project 2 - Data Pagination and Filtering
 */
 
-//is this linked? 
 
-/*
-For assistance:
-   Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
-   Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
+/**
+*Create the `showPage` function
+   *This function will create and insert/append the elements needed to display a "page" of nine students
+   *created two variables, startIndex and endIndex to determine first and last object that will be displayed in one page.
+   *Selected parent element 'ul'with the class .student-list to insert new HTML.
+   *Use template literals and for loop to dynamically insert each object in the parent element. 
+   *Used 'i' in for loop and template literals in order for appropriate information to show for each student item.
 */
-
-
-
-/*
-Create the `showPage` function
-This function will create and insert/append the elements needed to display a "page" of nine students
-*/
-
-//The list parameter will represent the array of student data we are working with
-//page parameter will be the page number that we want to display.
 
 
 function showPage(list, page) { 
@@ -27,112 +19,101 @@ function showPage(list, page) {
    startIndex = (page * 9) - 9; 
    endIndex = (page * 9); 
    
- const studentList = document.querySelector('.student-list'); 
+   const studentList = document.querySelector('.student-list'); 
 
    studentList.innerHTML = '';
  
-   // loop over the length of the `list` parameter
    for (let i = 0; i< list.length; i++) {
-     // inside the loop create a conditional to display the proper students
      if (i >= startIndex && i<endIndex) {
-       // inside the conditional:
-         // create the elements needed to display the student information
-
          const studentItem = 
-         ` 
-         <li class="student-item cf">
-    <div class="student-details">
-      <img class="avatar" src= ${list[i].picture.thumbnail} alt="Profile Picture">
-      <h3>${list[i].name.first} ${list[i].name.last}</h3>
-      <span class="email">${list[i].email}</span>
-    </div>
-    <div class="joined-details">
-      <span class="date">${list[i].registered.date}</span>
-    </div>
-  </li>
-         
-         `;
-   
+                   
+       `<li class="student-item cf">
+            <div class="student-details">
+               <img class="avatar" src= ${list[i].picture.thumbnail} alt="Profile Picture">
+               <h3>${list[i].name.first} ${list[i].name.last}</h3>
+               <span class="email">${list[i].email}</span>
+            </div>
+            <div class="joined-details">
+               <span class="date">${list[i].registered.date}</span>
+            </div>
+         </li>`;
+
          studentList.insertAdjacentHTML('beforeend', studentItem)
          
      }
-   };
-  
-
-   
+   }
  }
-
 
 showPage(data, 1);
 
-/*
-Create the `addPagination` function
-This function will create and insert/append the elements needed for the pagination buttons
+/**
+*Create the `addPagination` function
+   *This function will create and insert/append the elements needed for the pagination buttons
+   *Created the formula numOfPages to determine the number of pages necessary dependent on the total number of student items. 
+   *Selected the parent element 'ul' with the class name 'link-list' where the pagination buttons will be inserted. 
+   *Created a for loop where a button will be added with the corresponding page number dependent on total number of student items.
+   *Inserted these buttons using the insertAdjeventHTML
 */
 
 function addPagination (list) {
 
-// create a variable to calculate the number of pages needed
+  const numOfPages = Math.ceil(list.length / 9); 
 
-const numOfPages = Math.ceil(list.length / 9); //returning 5
+  const linkList = document.querySelector('.link-list'); 
 
+  linkList.innerHTML = ''; 
 
-  // select the element with a class of `link-list` and assign it to a variable
-
-  const linkList = document.querySelector('.link-list'); //returning ul
-
-  // set the innerHTML property of the variable you just created to an empty string
-  linkList.innerHTML = ''; //replacing whats in ul
-
-  // loop over the number of pages needed
-    // create the elements needed to display the pagination button
-    // insert the above elements
-
-
-    for (let i = 1; i <= numOfPages; i++) { //for 42 objects, will loop 5
+    for (let i = 1; i <= numOfPages; i++) { 
          const button = 
-         `<li>
-         <button type="button">${i}</button>
-       </li>`;
+        `<li>
+            <button type="button">${i}</button>
+         </li>`;
 
        linkList.insertAdjacentHTML('beforeend', button );
 
-  // give the first pagination button a class of "active"
-  const clickedButton = document.querySelector('button');
-       clickedButton.className = 'active';
 
-  // create an event listener on the `link-list` element
+/**
+ * function continued...
+   * Using querySelector, we retrun the first button and provide it the class name 'active' so user receives instant feedback about what page they are on.
+   * Add an event listener to the ul .linklist where the buttons are located.
+   * If the target of the click has the tagName of 'button' then it will:
+   * store the first active button into a variable named prevButton
+   * Now that the active button is considered a previous button, it should no longer show up blue.
+   * They new target button will have the class name 'active' now.
+   * Then we insert the first function to fun, providing it the paramaters list and the number of the button. 
+   * Lastly, call the addPagination function.
+ */
+  const clickedButton = document.querySelector('button');
+        clickedButton.className = 'active';
 
   linkList.addEventListener('click', (event) => {
-// if the click target is a button:
+
 if (event.target.tagName === 'BUTTON') {
-      // remove the "active" class from the previous button
+  
 const prevButton = document.querySelector('.active');
 prevButton.className = '';
- // add the active class to the clicked button
+
 event.target.className = 'active';
  
      
-      // call the showPage function passing the `list` parameter and page to display as arguments
+    
 showPage(list, event.target.textContent);
 
-}
-   
-
-
+   }
   }) 
-
- 
-    }
+ }
 }
 
 addPagination(data);
 
 
 
-// Call functions
+/**
+ * Including the search bar
+ *Selected the parent element where search bar will be inserted 'header'
+ *insert HTML search into header
+ */
 
-function searchBar (list) {
 
 const header = document.querySelector('.header');
 
@@ -148,47 +129,28 @@ const search =
 header.insertAdjacentHTML('beforeend', search )
 
 
-const searchInput = document.getElementById('search');
 
-searchInput.addEventListener("input", (e) => {
+/**
+ * Here I believed that cards would bring me back an array of li's that we created in earleir functions, but looks like it is coming back as a nodeList of 0
+ * Would like feedback on what I missed here, 
+ */
 
-   let value = e.target.value
+ 
+ 
+function liveSearch () {
+   let cards = document.querySelectorAll('.student-list').children;
+   let searchQuery = document.getElementById('search').value //will return what user writes 
+   searchQuery = searchQuery.toLowerCase();
 
-   // 2. check: if input exists and if input is larger than 0
-   if (value && value.trim().length > 0){
-       // 3. redefine 'value' to exclude white space and change input to all lowercase
-        value = value.trim().toLowerCase()
-       // 4. return the results only if the value of the search is included in the person's name
-       // we need to write code (a function for filtering through our data to include the search input value)
-      
-   } else {
-       // 5. return nothing
-       // input is invalid -- show an error message or show no results
+   for (let i = 0; i < cards.length; i++) {
+      if(cards[i].innerText.toLowerCase()
+      .includes(searchQuery)) {
+         cards[i].style.display = '';
+      }
 
+         cards[i].style.display= 'none';
    }
 
-})
+}
 
-
-
-
-
-
-
-
-
-
-// const filter = input.value.toUpperCase();
-// const itemChild = document.querySelector('student-item cf');
-// const UlParent = document.querySelector('.student-list');
-
-// for (let i = 0; i < list.length; i++) {
-
-
-
-
-// }
-
-};
-
-searchBar(data);
+liveSearch();
