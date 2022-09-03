@@ -109,11 +109,12 @@ if (event.target.tagName === 'BUTTON') {
       // remove the "active" class from the previous button
 const prevButton = document.querySelector('.active');
 prevButton.className = '';
+ // add the active class to the clicked button
 event.target.className = 'active';
  
-      // add the active class to the clicked button
+     
       // call the showPage function passing the `list` parameter and page to display as arguments
-
+showPage(list, event.target.textContent);
 
 }
    
@@ -130,3 +131,64 @@ addPagination(data);
 
 
 // Call functions
+
+function searchBar (list) {
+
+const header = document.querySelector('.header');
+
+header.innerHTML = '';
+
+const search = 
+`<label for="search" class="student-search">
+<span>Search by name</span>
+<input id="search" placeholder="Search by name...">
+<button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+</label>`
+
+header.insertAdjacentHTML('beforeend', search )
+
+
+const searchInput = document.getElementById('search');
+
+searchInput.addEventListener("input", (e) => {
+
+   let value = e.target.value
+
+   // 2. check: if input exists and if input is larger than 0
+   if (value && value.trim().length > 0){
+       // 3. redefine 'value' to exclude white space and change input to all lowercase
+        value = value.trim().toLowerCase()
+       // 4. return the results only if the value of the search is included in the person's name
+       // we need to write code (a function for filtering through our data to include the search input value)
+      
+   } else {
+       // 5. return nothing
+       // input is invalid -- show an error message or show no results
+
+   }
+
+})
+
+
+
+
+
+
+
+
+
+
+// const filter = input.value.toUpperCase();
+// const itemChild = document.querySelector('student-item cf');
+// const UlParent = document.querySelector('.student-list');
+
+// for (let i = 0; i < list.length; i++) {
+
+
+
+
+// }
+
+};
+
+searchBar(data);
