@@ -109,6 +109,7 @@ addPagination(data);
 
 
 /**
+ * EXTRA CREDIT
  * Including the search bar
  *Selected the parent element where search bar will be inserted 'header'
  *insert HTML search into header
@@ -138,7 +139,8 @@ header.insertAdjacentHTML('beforeend', search )
  
  
 function liveSearch () {
-   let cards = document.querySelectorAll('.student-list').children;
+   let cards = document.querySelectorAll('li.student-item') //thought would return array of li's
+   const cardsArr = Array.from(cards); //converting to array
    let searchQuery = document.getElementById('search').value //will return what user writes 
    searchQuery = searchQuery.toLowerCase();
 
@@ -146,9 +148,10 @@ function liveSearch () {
       if(cards[i].innerText.toLowerCase()
       .includes(searchQuery)) {
          cards[i].style.display = '';
-      }
+      } else {
 
          cards[i].style.display= 'none';
+      }
    }
 
 }
